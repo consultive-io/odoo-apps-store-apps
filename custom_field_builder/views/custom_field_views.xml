@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Form View -->
+    <record id="view_custom_field_builder_form" model="ir.ui.view">
+        <field name="name">custom.field.builder.form</field>
+        <field name="model">custom.field.builder</field>
+        <field name="arch" type="xml">
+            <form string="Custom Field">
+                <header>
+                    <button name="action_create_field" string="Create Field" 
+                            type="object" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_update_field" string="Update Field" 
+                            type="object" class="oe_highlight"
+                            invisible="state != 'active'"/>
+                    <button name="action_delete_field" string="Delete Field" 
+                            type="object" class="btn-danger"
+                            invisible="state != 'active'"
+                            confirm="Are you sure you want to delete this field? This action cannot be undone."/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                        </button>
+                    </div>
+                    
+                    <group>
+                        <group name="basic_info" string="Basic Information">
+                            <field name="model_id" options="{'no_create': True}"/>
+                            <field name="name" placeholder="x_custom_field"/>
+                            <field name="field_description"/>
+                            <field name="field_type"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group name="technical_info" string="Technical">
+                            <field name="field_id" readonly="1"/>
+                            <field name="view_position"/>
+                            <field name="model_name" invisible="1"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Field Properties" name="properties">
+                            <group>
+                                <group string="Relational Settings" 
+                                       invisible="field_type not in ('many2one', 'many2many', 'one2many')">
+                                    <field name="relation_model_id" 
+                                           required="field_type in ('many2one', 'many2many', 'one2many')"/>
+                                    <field name="relation_field_id" 
+                                           invisible="field_type != 'one2many'"
+                                           domain="[('model_id', '=', relation_model_id), ('ttype', '=', 'many2one')]"/>
+                                </group>
+                                
+                                <group string="Domain Filter" 
+                                       invisible="field_type not in ('many2one', 'many2many', 'one2many')">
+                                    <field name="domain" widget="domain" 
+                                           options="{'model': 'relation_model_id', 'in_dialog': True}"
+                                           nolabel="1"/>
+                                </group>
+                                
+                                <group string="Selection Settings" 
+                                       invisible="field_type != 'selection'">
+                                    <field name="selection_options" 
+                                           placeholder="Example: draft,Draft (one per line)"
+                                           required="field_type == 'selection'"/>
+                                </group>
+                                
+                                <group string="Default and Help">
+                                    <field name="default_value"/>
+                                    <field name="help_text"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Attributes" name="attributes">
+                            <group>
+                                <group string="Basic Attributes">
+                                    <field name="required"/>
+                                    <field name="readonly"/>
+                                    <field name="invisible"/>
+                                    <field name="track_visibility"/>
+                                </group>
+                                
+                                <group string="Conditional Attributes" name="conditional_attrs">
+                                    <p colspan="2" class="text-muted">
+                                        Define conditions using the domain builder. 
+                                        The field will have the attribute when the condition is met.
+                                    </p>
+                                </group>
+                            </group>
+                            
+                            <group>
+                                <group string="Readonly Condition">
+                                    <field name="readonly_condition" widget="domain" 
+                                           options="{'model': 'model_name', 'in_dialog': True}"
+                                           nolabel="1"/>
+                                </group>
+                                
+                                <group string="Invisible Condition">
+                                    <field name="invisible_condition" widget="domain" 
+                                           options="{'model': 'model_name', 'in_dialog': True}"
+                                           nolabel="1"/>
+                                </group>
+                            </group>
+                            
+                            <group>
+                                <group string="Required Condition">
+                                    <field name="required_condition" widget="domain" 
+                                           options="{'model': 'model_name', 'in_dialog': True}"
+                                           nolabel="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Security" name="security">
+                            <group>
+                                <field name="groups_ids" widget="many2many_tags"/>
+                            </group>
+                            <group string="Info">
+                                <p class="text-muted">
+                                    Leave empty to make the field visible to all users.
+                                    Select specific groups to restrict visibility.
+                                </p>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- List View -->
+    <record id="view_custom_field_builder_tree" model="ir.ui.view">
+        <field name="name">custom.field.builder.list</field>
+        <field name="model">custom.field.builder</field>
+        <field name="arch" type="xml">
+            <list sample="1" multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="model_id"/>
+                <field name="name"/>
+                <field name="field_description"/>
+                <field name="field_type"/>
+                <field name="required"/>
+                <field name="readonly"/>
+                <field name="invisible"/>
+                <field name="state" widget="badge" 
+                       decoration-success="state == 'active'"
+                       decoration-info="state == 'draft'"
+                       decoration-muted="state == 'archived'"/>
+            </list>
+        </field>
+    </record>
+    
+    <!-- Search View -->
+    <record id="view_custom_field_builder_search" model="ir.ui.view">
+        <field name="name">custom.field.builder.search</field>
+        <field name="model">custom.field.builder</field>
+        <field name="arch" type="xml">
+            <search string="Search Custom Fields">
+                <field name="name"/>
+                <field name="field_description"/>
+                <field name="model_id"/>
+                <field name="field_type"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                <filter string="Archived" name="archived" domain="[('state', '=', 'archived')]"/>
+                <separator/>
+                <filter string="Required" name="required" domain="[('required', '=', True)]"/>
+                <filter string="Readonly" name="readonly" domain="[('readonly', '=', True)]"/>
+                <separator/>
+                <group name="group_by">
+                    <filter string="Model" name="group_model" context="{'group_by': 'model_id'}"/>
+                    <filter string="Field Type" name="group_type" context="{'group_by': 'field_type'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Action -->
+    <record id="action_custom_field_builder" model="ir.actions.act_window">
+        <field name="name">Custom Fields</field>
+        <field name="res_model">custom.field.builder</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_custom_field_builder_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first custom field
+            </p>
+            <p>
+                Custom fields allow you to add new fields to existing models without coding.
+                Simply select a model, define your field properties, and activate it.
+            </p>
+        </field>
+    </record>
+    
+</odoo>

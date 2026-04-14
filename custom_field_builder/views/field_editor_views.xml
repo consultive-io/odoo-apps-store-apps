@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Field Editor Form View -->
+    <record id="view_field_editor_form" model="ir.ui.view">
+        <field name="name">field.editor.form</field>
+        <field name="model">field.editor</field>
+        <field name="arch" type="xml">
+            <form string="Field Editor">
+                <header>
+                    <button name="action_apply_modifications" string="Apply Modifications" 
+                            type="object" class="oe_highlight"
+                            invisible="state == 'active'"/>
+                    <button name="action_reset_modifications" string="Reset to Original" 
+                            type="object" class="btn-warning"
+                            invisible="state != 'active'"
+                            confirm="Are you sure you want to remove all modifications to this field?"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                        </button>
+                    </div>
+                    
+                    <widget name="web_ribbon" title="System Field" bg_color="text-bg-warning" 
+                            invisible="is_custom_field"/>
+                    <widget name="web_ribbon" title="Custom Field" bg_color="text-bg-success" 
+                            invisible="not is_custom_field"/>
+                    
+                    <group>
+                        <group name="field_info" string="Field Information">
+                            <field name="model_id" options="{'no_create': True}"/>
+                            <field name="field_id" 
+                                   domain="[('model_id', '=', model_id)]"
+                                   options="{'no_create': True}"
+                                   context="{'default_model_id': model_id}"/>
+                            <field name="field_description"/>
+                            <field name="field_type"/>
+                            <field name="field_state" invisible="1"/>
+                            <field name="is_custom_field" invisible="1"/>
+                            <field name="model_name" invisible="1"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Modifications" name="modifications">
+                            <group>
+                                <group string="Field Attributes">
+                                    <field name="new_field_description" 
+                                           placeholder="Leave empty to keep current label"/>
+                                    <field name="new_help_text" 
+                                           placeholder="Add help text for users"/>
+                                </group>
+                                
+                                <group string="Security">
+                                    <field name="groups_ids" widget="many2many_tags"
+                                           placeholder="Leave empty for all users"/>
+                                </group>
+                            </group>
+                            
+                            <group string="Conditional Attributes">
+                                <p colspan="2" class="text-muted">
+                                    Use the domain builder to create conditions for when the field should be readonly, 
+                                    invisible, or required. These conditions will be applied through view inheritance.
+                                </p>
+                            </group>
+                            
+                            <group>
+                                <group string="Readonly Condition">
+                                    <field name="readonly_condition" widget="domain" 
+                                           options="{'model': 'model_name', 'in_dialog': True}"
+                                           nolabel="1"/>
+                                </group>
+                                
+                                <group string="Invisible Condition">
+                                    <field name="invisible_condition" widget="domain" 
+                                           options="{'model': 'model_name', 'in_dialog': True}"
+                                           nolabel="1"/>
+                                </group>
+                            </group>
+                            
+                            <group>
+                                <group string="Required Condition">
+                                    <field name="required_condition" widget="domain" 
+                                           options="{'model': 'model_name', 'in_dialog': True}"
+                                           nolabel="1"/>
+                                </group>
+                                
+                                <group string="View Position">
+                                    <field name="view_position"/>
+                                    <p class="text-muted">
+                                        <small>Note: Position changes are experimental and may not work for all fields.</small>
+                                    </p>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Notes" name="notes">
+                            <group>
+                                <field name="modification_note" 
+                                       placeholder="Document why this field was modified, what changes were made, etc."
+                                       nolabel="1"/>
+                            </group>
+                            
+                            <group string="Important Information">
+                                <div class="alert alert-info" role="alert">
+                                    <h4 class="alert-heading">Safe Modifications</h4>
+                                    <p>The Field Editor allows you to modify:</p>
+                                    <ul>
+                                        <li>Field labels and help text</li>
+                                        <li>Security groups</li>
+                                        <li>Conditional attributes (readonly, invisible, required)</li>
+                                    </ul>
+                                    <p class="mb-0">These modifications are applied through view inheritance and don't affect the core field definition.</p>
+                                </div>
+                                
+                                <div class="alert alert-warning" role="alert" invisible="is_custom_field">
+                                    <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"/> System Field Warning</h4>
+                                    <p>You are modifying a system field. Please note:</p>
+                                    <ul>
+                                        <li>Changes may be overwritten during module updates</li>
+                                        <li>Modifications might affect module functionality</li>
+                                        <li>Test thoroughly in a development environment first</li>
+                                    </ul>
+                                    <p class="mb-0"><strong>Recommended:</strong> Only modify custom fields (state='manual')</p>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Field Editor List View -->
+    <record id="view_field_editor_list" model="ir.ui.view">
+        <field name="name">field.editor.list</field>
+        <field name="model">field.editor</field>
+        <field name="arch" type="xml">
+            <list sample="1">
+                <field name="model_id"/>
+                <field name="field_id"/>
+                <field name="field_description"/>
+                <field name="field_type"/>
+                <field name="is_custom_field" string="Custom"/>
+                <field name="state" widget="badge" 
+                       decoration-success="state == 'active'"
+                       decoration-info="state == 'draft'"/>
+            </list>
+        </field>
+    </record>
+    
+    <!-- Field Editor Search View -->
+    <record id="view_field_editor_search" model="ir.ui.view">
+        <field name="name">field.editor.search</field>
+        <field name="model">field.editor</field>
+        <field name="arch" type="xml">
+            <search string="Search Field Modifications">
+                <field name="field_id"/>
+                <field name="model_id"/>
+                <separator/>
+                <filter string="Custom Fields" name="custom_fields" domain="[('is_custom_field', '=', True)]"/>
+                <filter string="System Fields" name="system_fields" domain="[('is_custom_field', '=', False)]"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                <separator/>
+                <group name="group_by">
+                    <filter string="Model" name="group_model" context="{'group_by': 'model_id'}"/>
+                    <filter string="Field Type" name="group_type" context="{'group_by': 'field_type'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Warning Dialog Form -->
+    <record id="view_field_editor_warning_form" model="ir.ui.view">
+        <field name="name">field.editor.warning.form</field>
+        <field name="model">field.editor.warning</field>
+        <field name="arch" type="xml">
+            <form string="Warning: Modifying System Field">
+                <sheet>
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading"><i class="fa fa-exclamation-triangle"/> Warning: System Field Modification</h4>
+                        <p>You are about to modify a <strong>system field</strong> on the <strong><field name="model_name" readonly="1"/></strong> model.</p>
+                        <hr/>
+                        <p>Field: <strong><field name="field_name" readonly="1"/></strong></p>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <div class="o_field_highlight">
+                                <h5>Risks of modifying system fields:</h5>
+                                <ul>
+                                    <li>Changes may be <strong>overwritten</strong> during module updates</li>
+                                    <li>May cause <strong>unexpected behavior</strong> in existing modules</li>
+                                    <li>Could affect <strong>business logic</strong> and workflows</li>
+                                    <li>Might break <strong>integrations</strong> and automations</li>
+                                </ul>
+                            </div>
+                        </group>
+                        
+                        <group>
+                            <div class="o_field_highlight">
+                                <h5>Recommended approach:</h5>
+                                <ul>
+                                    <li><strong>Test</strong> in a development environment first</li>
+                                    <li><strong>Document</strong> all changes made</li>
+                                    <li><strong>Backup</strong> your database before applying</li>
+                                    <li>Consider using <strong>custom fields</strong> instead</li>
+                                </ul>
+                            </div>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <field name="confirmation" string="I understand the risks and want to proceed"/>
+                        <field name="field_editor_id" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm" string="Proceed with Modification" 
+                            type="object" class="btn-danger"
+                            invisible="not confirmation"/>
+                    <button name="action_cancel" string="Cancel" 
+                            type="object" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Action -->
+    <record id="action_field_editor" model="ir.actions.act_window">
+        <field name="name">Field Editor</field>
+        <field name="res_model">field.editor</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_field_editor_search"/>
+        <field name="context">{'search_default_custom_fields': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Start editing existing fields
+            </p>
+            <p>
+                The Field Editor allows you to safely modify attributes of existing model fields.
+                Select a model and field to begin editing.
+            </p>
+        </field>
+    </record>
+    
+</odoo>

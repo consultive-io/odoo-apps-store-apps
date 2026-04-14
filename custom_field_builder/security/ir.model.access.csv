@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_custom_field_builder_system,access_custom_field_builder_system,model_custom_field_builder,base.group_system,1,1,1,1
+access_custom_field_builder_user,access_custom_field_builder_user,model_custom_field_builder,base.group_user,1,0,0,0
+access_custom_field_config_system,access_custom_field_config_system,model_custom_field_config,base.group_system,1,1,1,1
+access_field_editor_system,access_field_editor_system,model_field_editor,base.group_system,1,1,1,1
+access_field_editor_user,access_field_editor_user,model_field_editor,base.group_user,1,0,0,0
+access_field_editor_warning,access_field_editor_warning,model_field_editor_warning,base.group_system,1,1,1,1

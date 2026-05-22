@@ -1,5 +1,5 @@
 {
-    "name": "MOQ per Vendor-Product",
+    "name": "Minimum Order Quantity (MOQ) Product-wise & Vendor-wise",
     "version": "19.0.1.0.0",
     "summary": "Minimum Order Quantity per vendor-product with PO warnings",
     "description": """

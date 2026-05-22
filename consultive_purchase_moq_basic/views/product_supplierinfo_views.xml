@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add MOQ column to the vendor list shown on Product > Purchase tab -->
+    <record id="product_supplierinfo_view_list_inherit_moq" model="ir.ui.view">
+        <field name="name">product.supplierinfo.list.inherit.moq</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="purchase.product_supplierinfo_tree_view2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='min_qty']" position="after">
+                <field name="moq"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Also add to the generic supplierinfo list view (Purchase > Configuration) -->
+    <record id="product_supplierinfo_view_list_generic_inherit_moq" model="ir.ui.view">
+        <field name="name">product.supplierinfo.list.generic.inherit.moq</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='min_qty']" position="after">
+                <field name="moq"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

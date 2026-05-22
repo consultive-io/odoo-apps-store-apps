@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minimum Order Quantity per Vendor-Product</title>
+</head>
+<body>
+
+<section style="background:#f5f5f5; padding:40px 20px; text-align:center; font-family: Arial, sans-serif;">
+    <h1 style="margin:0; color:#222; font-size:30px;">Minimum Order Quantity per Vendor-Product</h1>
+    <p style="color:#666; font-size:16px; margin-top:10px;">
+        Enforce vendor-specific MOQ on Odoo Purchase Orders with on-the-fly warnings.
+    </p>
+</section>
+
+<section style="padding:30px 40px; max-width:900px; margin:auto; font-family: Arial, sans-serif; color:#333; line-height:1.6;">
+
+    <h2 style="color:#222; border-bottom:1px solid #ddd; padding-bottom:6px;">Overview</h2>
+    <p>
+        Out of the box, Odoo supports vendor pricelists with quantity breaks but does not
+        enforce a true Minimum Order Quantity (MOQ) at Purchase Order creation. This
+        lightweight module fills that gap by adding a dedicated MOQ field per
+        vendor-product, and surfacing a clear warning when a buyer attempts to order
+        below the configured minimum.
+    </p>
+
+    <h2 style="color:#222; border-bottom:1px solid #ddd; padding-bottom:6px;">Key Features</h2>
+    <ul>
+        <li>Adds a dedicated <strong>MOQ</strong> field on each vendor row inside the product's Purchase tab.</li>
+        <li>Keeps Odoo's existing price-break logic (<code>min_qty</code>) fully intact &mdash; MOQ is a separate, non-interfering field.</li>
+        <li>Adds a read-only <strong>Vendor MOQ</strong> column on every Purchase Order line, auto-resolved from the selected vendor and product.</li>
+        <li>Shows an on-screen warning popup if the ordered quantity falls below the configured MOQ.</li>
+        <li>Non-blocking by design &mdash; buyers stay in control while being informed.</li>
+        <li>Works for both Requests for Quotation (RFQ) and confirmed Purchase Orders.</li>
+    </ul>
+
+    <h2 style="color:#222; border-bottom:1px solid #ddd; padding-bottom:6px;">How It Works</h2>
+    <ol>
+        <li>Open any product and navigate to the <strong>Purchase</strong> tab.</li>
+        <li>In the vendor list, enter a value in the new <strong>MOQ</strong> column for each vendor row.</li>
+        <li>When a buyer creates a Purchase Order or RFQ for that vendor, the MOQ is displayed alongside the quantity field.</li>
+        <li>If the buyer enters a quantity below the MOQ, a warning popup is shown immediately.</li>
+    </ol>
+
+    <h2 style="color:#222; border-bottom:1px solid #ddd; padding-bottom:6px;">Technical Information</h2>
+    <ul>
+        <li>Compatible with Odoo 19.0</li>
+        <li>Dependencies: <code>purchase</code></li>
+        <li>License: LGPL-3</li>
+    </ul>
+
+</section>
+
+<section style="background:#1f2937; color:#e5e7eb; padding:30px 40px; text-align:center; font-family: Arial, sans-serif;">
+    <h2 style="color:#fff; margin-top:0;">About Consultive</h2>
+    <p style="max-width:700px; margin:auto; line-height:1.6;">
+        Consultive specializes in custom Odoo development, implementation, and
+        business process consulting. Get in touch for tailored modules,
+        integrations, and end-to-end Odoo deployments.
+    </p>
+    <p style="margin-top:20px; line-height:1.8;">
+        Website: <a href="https://consultive.io" style="color:#93c5fd; text-decoration:none;">consultive.io</a><br>
+        Email: <a href="mailto:contact@consultive.io" style="color:#93c5fd; text-decoration:none;">contact@consultive.io</a><br>
+        Phone: +880 1711 751571
+    </p>
+</section>
+
+</body>
+</html>

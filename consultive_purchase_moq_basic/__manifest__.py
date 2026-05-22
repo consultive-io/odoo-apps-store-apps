@@ -10,7 +10,9 @@ shown if the ordered quantity falls below the configured MOQ for the selected
 vendor-product combination.
     """,
     "category": "Purchases",
-    "author": "Custom",
+    "author": "Consultive",
+    "website": "https://consultive.io",
+    "support": "contact@consultive.io",
     "license": "LGPL-3",
     "depends": ["purchase"],
     "data": [

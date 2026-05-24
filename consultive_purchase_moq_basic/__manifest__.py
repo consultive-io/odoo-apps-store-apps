@@ -15,6 +15,11 @@ vendor-product combination.
     "support": "contact@consultive.io",
     "license": "LGPL-3",
     "depends": ["purchase"],
+    "images": [
+        "static/description/app_image_1.jpg",
+        "static/description/app_image_2.png",
+        "static/description/app_image_3.png",
+    ],
     "data": [
         "views/product_supplierinfo_views.xml",
         "views/purchase_order_views.xml",

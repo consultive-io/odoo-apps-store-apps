@@ -1,5 +1,5 @@
 {
-    'name': 'Consultive - Enable Print Time Date Basic',
+    'name': 'Enable Print Time Date Basic',
     'version': '19.0.1.0.0',
     'category': 'Technical',
     'summary': (

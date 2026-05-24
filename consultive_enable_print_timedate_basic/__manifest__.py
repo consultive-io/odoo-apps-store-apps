@@ -19,7 +19,8 @@ very bottom of every PDF or printed report in Odoo.
   of the server's or user's local time zone.
     """,
     'author': 'Consultive',
-    'website': '',
+    'website': 'https://www.consultive.io',
+    'support': 'contact@consultive.io',
     'license': 'LGPL-3',
 
     # ------------------------------------------------------------------ #
@@ -35,6 +36,16 @@ very bottom of every PDF or printed report in Odoo.
     # ------------------------------------------------------------------ #
     'data': [
         'report/report_layout.xml',
+    ],
+
+    # ------------------------------------------------------------------ #
+    #  App Store assets                                                    #
+    # ------------------------------------------------------------------ #
+    # icon.png is auto-discovered from static/description/icon.png
+    # images lists the cover / gallery images shown on the App Store page
+    'images': [
+        'static/description/app_image_1.png',
+        'static/description/app_image_2.png',
     ],
 
     'installable': True,

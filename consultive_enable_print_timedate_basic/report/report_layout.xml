@@ -8,10 +8,9 @@
         report layout footer divs.
 
         Layout → footer CSS class mapping (web/views/report_templates.xml):
-            Standard  →  o_standard_footer
-            Striped   →  o_background_footer
-            Boxed     →  o_boxed_footer
-            Bold      →  o_clean_footer
+            All layouts (Odoo 19+) → o_footer_content
+            (Legacy Odoo 16–18: Standard=o_standard_footer, Striped=o_background_footer,
+             Boxed=o_boxed_footer, Bold=o_clean_footer — all removed in Odoo 19)
 
         The QWeb evaluation context for reports always contains the Python
         `datetime` module, so datetime.datetime / datetime.timezone are
@@ -27,7 +26,7 @@
         inherit_id="web.external_layout_standard"
         name="Consultive Print Timestamp – Standard Layout">
 
-        <xpath expr="//div[hasclass('o_standard_footer')]" position="inside">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="after">
             <div
                 class="consultive-print-timestamp"
                 style="
@@ -54,7 +53,7 @@
         inherit_id="web.external_layout_striped"
         name="Consultive Print Timestamp – Striped Layout">
 
-        <xpath expr="//div[hasclass('o_background_footer')]" position="inside">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="after">
             <div
                 class="consultive-print-timestamp"
                 style="
@@ -81,7 +80,7 @@
         inherit_id="web.external_layout_boxed"
         name="Consultive Print Timestamp – Boxed Layout">
 
-        <xpath expr="//div[hasclass('o_boxed_footer')]" position="inside">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="after">
             <div
                 class="consultive-print-timestamp"
                 style="
@@ -113,7 +112,7 @@
             div, so we append a full-width row beneath the existing grid row
             to avoid disturbing the four-column layout above.
         -->
-        <xpath expr="//div[hasclass('o_clean_footer')]" position="inside">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="after">
             <div
                 class="consultive-print-timestamp row"
                 style="

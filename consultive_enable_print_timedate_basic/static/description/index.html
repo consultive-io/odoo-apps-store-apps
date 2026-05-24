@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+<!-- ============================================================
+     OVERVIEW
+============================================================ -->
+<section style="margin-bottom: 32px;">
+    <h2 style="color: #2c3e50;">Overview</h2>
+    <p>
+        <strong>Consultive – Enable Print Time Date Basic</strong> automatically appends a
+        <em>"Printed on: Month DD, YYYY HH:MM AM/PM (GMT)"</em> line at the very bottom of
+        every PDF or printed report in Odoo. Once installed, no further configuration is
+        needed — the timestamp appears system-wide across all reports immediately.
+    </p>
+</section>
+
+<!-- ============================================================
+     KEY FEATURES
+============================================================ -->
+<section style="margin-bottom: 32px;">
+    <h2 style="color: #2c3e50;">Key Features</h2>
+    <ul>
+        <li>Adds a clean print timestamp to the footer of <strong>every PDF / printed report</strong> system-wide.</li>
+        <li>Displays date and time in <strong>Month DD, YYYY HH:MM AM/PM (GMT)</strong> format.</li>
+        <li>Time is always expressed in <strong>GMT / UTC</strong> — unambiguous regardless of server or user time zone.</li>
+        <li>Covers all <strong>four built-in Odoo report layouts</strong>: Standard, Striped, Boxed, and Bold.</li>
+        <li>Compatible with both <strong>Odoo Community and Enterprise</strong> editions.</li>
+        <li>Zero configuration — install and it works.</li>
+        <li>Lightweight — no new database tables, no Python models, no settings screens.</li>
+    </ul>
+</section>
+
+<!-- ============================================================
+     HOW IT WORKS
+============================================================ -->
+<section style="margin-bottom: 32px;">
+    <h2 style="color: #2c3e50;">How It Works</h2>
+    <p>
+        The module extends Odoo's four built-in QWeb report layout templates
+        (<code>web.external_layout_standard</code>, <code>web.external_layout_striped</code>,
+        <code>web.external_layout_boxed</code>, <code>web.external_layout_bold</code>)
+        using standard Odoo template inheritance. A timestamp div is injected at the bottom
+        of each layout's footer, rendered server-side at the exact moment a report is
+        generated or printed.
+    </p>
+</section>
+
+<!-- ============================================================
+     INSTALLATION
+============================================================ -->
+<section style="margin-bottom: 32px;">
+    <h2 style="color: #2c3e50;">Installation</h2>
+    <ol>
+        <li>Copy the <code>consultive_enable_print_timedate_basic</code> folder into your Odoo add-ons path.</li>
+        <li>Restart the Odoo server.</li>
+        <li>In the backend, go to <strong>Apps</strong>, remove the <em>Apps</em> filter, search for
+            <strong>Consultive Enable Print Time Date Basic</strong>, and click <strong>Install</strong>.</li>
+    </ol>
+    <p>To disable the timestamp, simply uninstall the module from the Apps menu.</p>
+</section>
+
+<!-- ============================================================
+     COMPATIBILITY
+============================================================ -->
+<section style="margin-bottom: 32px;">
+    <h2 style="color: #2c3e50;">Compatibility</h2>
+    <ul>
+        <li><strong>Odoo Version:</strong> 19.0</li>
+        <li><strong>Editions:</strong> Community &amp; Enterprise</li>
+        <li><strong>Dependencies:</strong> <code>web</code> (no additional modules required)</li>
+    </ul>
+</section>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section style="
+    margin-top: 40px;
+    padding: 24px 28px;
+    background-color: #f5f7fa;
+    border-left: 4px solid #2c3e50;
+    border-radius: 4px;
+">
+    <h2 style="color: #2c3e50; margin-top: 0;">Contact &amp; Support</h2>
+    <p style="margin: 0 0 6px;">
+        <strong>Consultive</strong>
+    </p>
+    <p style="margin: 0 0 6px;">
+        🌐 <a href="https://www.consultive.io" target="_blank">www.consultive.io</a>
+    </p>
+    <p style="margin: 0 0 6px;">
+        ✉️ <a href="mailto:contact@consultive.io">contact@consultive.io</a>
+    </p>
+    <p style="margin: 0;">
+        📞 <a href="tel:+8801711751571">+880 1711 751571</a>
+    </p>
+</section>
+
+</body>
+</html>

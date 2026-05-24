@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        consultive_enable_print_timedate_basic / report / report_layout.xml
+        =====================================================================
+        Injects a "Printed on: <date> <time> AM/PM (GMT)" line at the very
+        bottom of every PDF/print report by inheriting all four built-in
+        report layout footer divs.
+
+        Layout → footer CSS class mapping (web/views/report_templates.xml):
+            Standard  →  o_standard_footer
+            Striped   →  o_background_footer
+            Boxed     →  o_boxed_footer
+            Bold      →  o_clean_footer
+
+        The QWeb evaluation context for reports always contains the Python
+        `datetime` module, so datetime.datetime / datetime.timezone are
+        directly usable inside t-value expressions.
+        UTC time is used so the stamp is unambiguous on any deployment.
+    -->
+
+    <!-- ================================================================ -->
+    <!-- 1 / 4  Standard layout                                           -->
+    <!-- ================================================================ -->
+    <template
+        id="consultive_timestamp_standard"
+        inherit_id="web.external_layout_standard"
+        name="Consultive Print Timestamp – Standard Layout">
+
+        <xpath expr="//div[hasclass('o_standard_footer')]" position="inside">
+            <div
+                class="consultive-print-timestamp"
+                style="
+                    text-align: center;
+                    font-size: 8pt;
+                    color: #555555;
+                    border-top: 1px solid #cccccc;
+                    padding-top: 4px;
+                    margin-top: 6px;
+                ">
+                <t t-set="c_now"
+                   t-value="datetime.datetime.now(datetime.timezone.utc)"/>
+                Printed on:
+                <t t-out="c_now.strftime('%B %d, %Y %I:%M %p') + ' (GMT)'"/>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- ================================================================ -->
+    <!-- 2 / 4  Striped layout                                            -->
+    <!-- ================================================================ -->
+    <template
+        id="consultive_timestamp_striped"
+        inherit_id="web.external_layout_striped"
+        name="Consultive Print Timestamp – Striped Layout">
+
+        <xpath expr="//div[hasclass('o_background_footer')]" position="inside">
+            <div
+                class="consultive-print-timestamp"
+                style="
+                    text-align: center;
+                    font-size: 8pt;
+                    color: #555555;
+                    border-top: 1px solid #cccccc;
+                    padding-top: 4px;
+                    margin-top: 6px;
+                ">
+                <t t-set="c_now"
+                   t-value="datetime.datetime.now(datetime.timezone.utc)"/>
+                Printed on:
+                <t t-out="c_now.strftime('%B %d, %Y %I:%M %p') + ' (GMT)'"/>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- ================================================================ -->
+    <!-- 3 / 4  Boxed layout                                              -->
+    <!-- ================================================================ -->
+    <template
+        id="consultive_timestamp_boxed"
+        inherit_id="web.external_layout_boxed"
+        name="Consultive Print Timestamp – Boxed Layout">
+
+        <xpath expr="//div[hasclass('o_boxed_footer')]" position="inside">
+            <div
+                class="consultive-print-timestamp"
+                style="
+                    text-align: center;
+                    font-size: 8pt;
+                    color: #555555;
+                    border-top: 1px solid #cccccc;
+                    padding-top: 4px;
+                    margin-top: 6px;
+                ">
+                <t t-set="c_now"
+                   t-value="datetime.datetime.now(datetime.timezone.utc)"/>
+                Printed on:
+                <t t-out="c_now.strftime('%B %d, %Y %I:%M %p') + ' (GMT)'"/>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- ================================================================ -->
+    <!-- 4 / 4  Bold (Clean) layout                                       -->
+    <!-- ================================================================ -->
+    <template
+        id="consultive_timestamp_bold"
+        inherit_id="web.external_layout_bold"
+        name="Consultive Print Timestamp – Bold Layout">
+
+        <!--
+            The Bold footer uses a row/col grid rather than a single centred
+            div, so we append a full-width row beneath the existing grid row
+            to avoid disturbing the four-column layout above.
+        -->
+        <xpath expr="//div[hasclass('o_clean_footer')]" position="inside">
+            <div
+                class="consultive-print-timestamp row"
+                style="
+                    font-size: 8pt;
+                    color: #555555;
+                    border-top: 1px solid #cccccc;
+                    padding-top: 4px;
+                    margin-top: 6px;
+                ">
+                <div class="col-12 text-center">
+                    <t t-set="c_now"
+                       t-value="datetime.datetime.now(datetime.timezone.utc)"/>
+                    Printed on:
+                    <t t-out="c_now.strftime('%B %d, %Y %I:%M %p') + ' (GMT)'"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

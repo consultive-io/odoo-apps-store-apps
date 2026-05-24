@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="rule_ir_recent_record_own" model="ir.rule">
+        <field name="name">Recently Viewed: Own Records Only</field>
+        <field name="model_id" ref="model_ir_recent_record"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

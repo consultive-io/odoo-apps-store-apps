@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="consultive_recently_viewed_basic.RecentlyViewedSystray">
+        <div class="o_menu_systray_item o_recently_viewed_systray"
+             t-on-click.stop="onContainerClick">
+            <div class="o_recently_viewed_btn"
+                 t-on-click="toggle"
+                 role="button"
+                 tabindex="0"
+                 title="Recently Viewed">
+                <i class="fa fa-history"/>
+            </div>
+            <t t-if="state.open">
+                <div class="o_recently_viewed_dropdown dropdown-menu show">
+                    <t t-if="state.records.length === 0">
+                        <div class="o_recently_viewed_empty px-3 py-2 text-muted small">
+                            No recently viewed records
+                        </div>
+                    </t>
+                    <t t-foreach="state.records"
+                       t-as="record"
+                       t-key="record.res_model + '_' + record.res_id">
+                        <div class="o_recently_viewed_item dropdown-item"
+                             t-on-click="() => openRecord(record)">
+                            <small class="o_recently_viewed_model text-muted d-block">
+                                <t t-esc="record.model_description"/>
+                            </small>
+                            <span class="o_recently_viewed_name">
+                                <t t-esc="record.res_name || '(deleted)'"/>
+                            </span>
+                        </div>
+                    </t>
+                    <t t-if="state.records.length > 0">
+                        <div class="dropdown-divider"/>
+                        <div class="o_recently_viewed_clear dropdown-item text-danger small text-center"
+                             t-on-click="clearHistory">
+                            Clear History
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

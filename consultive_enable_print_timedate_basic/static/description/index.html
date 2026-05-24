@@ -1,0 +1,26 @@
+Overview
+Consultive – Enable Print Time Date Basic automatically appends a "Printed on: Month DD, YYYY HH:MM AM/PM (GMT)" line at the very bottom of every PDF or printed report in Odoo. Once installed, no further configuration is needed — the timestamp appears system-wide across all reports immediately.
+Key Features
+	•	Adds a clean print timestamp to the footer of every PDF / printed report system-wide.
+	•	Displays date and time in Month DD, YYYY HH:MM AM/PM (GMT) format.
+	•	Time is always expressed in GMT / UTC — unambiguous regardless of server or user time zone.
+	•	Covers all four built-in Odoo report layouts: Standard, Striped, Boxed, and Bold.
+	•	Compatible with both Odoo Community and Enterprise editions.
+	•	Zero configuration — install and it works.
+	•	Lightweight — no new database tables, no Python models, no settings screens.
+How It Works
+The module extends Odoo's four built-in QWeb report layout templates (web.external_layout_standard, web.external_layout_striped, web.external_layout_boxed, web.external_layout_bold) using standard Odoo template inheritance. A timestamp div is injected at the bottom of each layout's footer, rendered server-side at the exact moment a report is generated or printed.
+Installation
+	1	Copy the consultive_enable_print_timedate_basic folder into your Odoo add-ons path.
+	2	Restart the Odoo server.
+	3	In the backend, go to Apps, remove the Apps filter, search for Consultive Enable Print Time Date Basic, and click Install.
+To disable the timestamp, simply uninstall the module from the Apps menu.
+Compatibility
+	•	Odoo Version: 19.0
+	•	Editions: Community & Enterprise
+	•	Dependencies: web (no additional modules required)
+Contact & Support
+Consultive
+🌐 www.consultive.io
+✉️ contact@consultive.io
+📞 +880 1711 751571

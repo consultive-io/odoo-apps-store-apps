@@ -26,7 +26,10 @@ across devices and browsers.
             "consultive_recently_viewed_basic/static/src/js/form_controller_patch.js",
         ],
     },
-    "images": ["static/description/screenshot_1.png"],
+    "images": [
+        "static/description/screenshot_1.png",
+        "static/description/screenshot_2.png",
+    ],
     "price": 0,
     "currency": "EUR",
     "installable": True,

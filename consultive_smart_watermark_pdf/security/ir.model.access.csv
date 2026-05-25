@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_watermark_config_system,Watermark Config (System),model_consultive_watermark_config,base.group_system,1,1,1,1
+access_watermark_config_state_system,Watermark Config State (System),model_consultive_watermark_config_state,base.group_system,1,1,1,1
+access_watermark_config_user,Watermark Config (User Read),model_consultive_watermark_config,base.group_user,1,0,0,0
+access_watermark_config_state_user,Watermark Config State (User Read),model_consultive_watermark_config_state,base.group_user,1,0,0,0

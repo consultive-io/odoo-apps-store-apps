@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        consultive_smart_watermark_pdf / views / watermark_config_views.xml
+
+        List view, form view, window action, and Settings menu entry for
+        the consultive.watermark.config model.
+    -->
+
+    <!-- List view -->
+    <record id="view_watermark_config_list" model="ir.ui.view">
+        <field name="name">consultive.watermark.config.list</field>
+        <field name="model">consultive.watermark.config</field>
+        <field name="arch" type="xml">
+            <list string="Watermark Configurations">
+                <field name="model_id"/>
+                <field name="model_name" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_watermark_config_form" model="ir.ui.view">
+        <field name="name">consultive.watermark.config.form</field>
+        <field name="model">consultive.watermark.config</field>
+        <field name="arch" type="xml">
+            <form string="Watermark Configuration">
+                <header>
+                    <button
+                        name="action_load_states"
+                        type="object"
+                        string="Load States from Model"
+                        class="btn-secondary"
+                        help="Auto-populate state rows from the model's state field definition. Safe to run multiple times — will not create duplicates."
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Target Model">
+                            <field name="model_id"
+                                options="{'no_create': True, 'no_open': True}"
+                                domain="[('transient', '=', False)]"
+                            />
+                            <field name="model_name"/>
+                        </group>
+                        <group string="Scope">
+                            <field name="company_id"
+                                groups="base.group_multi_company"
+                                options="{'no_create': True}"
+                            />
+                            <field name="active"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="State Configuration" name="states">
+                            <p class="alert alert-info" role="alert">
+                                Click <strong>Load States from Model</strong> to auto-populate the table below.
+                                States with <strong>Confirmed (No Watermark)</strong> checked will NOT show a watermark on their PDFs.
+                                All other states will display the <strong>Watermark Label</strong> diagonally across the PDF.
+                            </p>
+                            <field name="state_line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="state_value"/>
+                                    <field name="state_label"/>
+                                    <field name="is_confirmed" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window action -->
+    <record id="action_watermark_config" model="ir.actions.act_window">
+        <field name="name">Watermark Configuration</field>
+        <field name="res_model">consultive.watermark.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No watermark configurations yet.
+            </p>
+            <p>
+                Create a configuration for a model to control which document states
+                display a watermark on their PDF reports.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu: Settings > Technical > Watermark Configuration -->
+    <menuitem
+        id="menu_watermark_config_root"
+        name="Watermark"
+        parent="base.menu_administration"
+        groups="base.group_system"
+        sequence="200"
+    />
+    <menuitem
+        id="menu_watermark_config"
+        name="Watermark Configuration"
+        parent="menu_watermark_config_root"
+        action="action_watermark_config"
+        groups="base.group_system"
+        sequence="10"
+    />
+
+</odoo>

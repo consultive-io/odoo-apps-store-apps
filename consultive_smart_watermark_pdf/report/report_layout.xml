@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        consultive_smart_watermark_pdf / report / report_layout.xml
+
+        Inherits web.report_layout to inject watermark for BROWSER / HTML rendering
+        (/report/html/... routes). This template runs with `docs` in context so the
+        watermark lookup works correctly.
+
+        PDF rendering path is handled in models/report_watermark.py:
+          _prepare_html() is called after web.report_layout is already discarded by
+          Odoo's PDF pipeline — it only keeps <div class="article"> nodes and re-wraps
+          them in web.minimal_layout. The Python override injects the overflow fix +
+          watermark div directly into each web.minimal_layout body string.
+    -->
+
+    <template
+        id="consultive_smart_watermark_report_layout"
+        name="Consultive Draft Watermark - Report Layout (HTML view)"
+        inherit_id="web.report_layout">
+
+        <xpath expr="//head" position="inside">
+            <style>
+                html, body, body.container, .o_body_html, .overflow-x-hidden, #wrapwrap, #wrapwrap > main { overflow: visible !important; overflow-x: visible !important; }
+            </style>
+        </xpath>
+
+        <xpath expr="//body" position="inside">
+            <t t-set="consultive_doc" t-value="docs[0] if docs else False"/>
+            <t t-if="consultive_doc and 'consultive.watermark.config' in env">
+                <t t-set="consultive_wm_text"
+                   t-value="env['consultive.watermark.config'].get_watermark_text(consultive_doc)"/>
+                <t t-if="consultive_wm_text">
+                    <div class="consultive-smart-watermark" style="position:fixed;top:0;left:0;right:0;bottom:0;display:table;z-index:99999;pointer-events:none;">
+                        <div style="display:table-cell;text-align:center;vertical-align:middle;">
+                            <span style="display:inline-block;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);white-space:nowrap;font-size:72pt;font-weight:900;font-family:Arial,Helvetica,sans-serif;color:rgba(220,38,38,0.45);-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+                                <t t-out="consultive_wm_text"/>
+                            </span>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- DISABLED: old footer-context templates (render at page bottom, not as overlay) -->
+    <template
+        id="consultive_smart_watermark_standard"
+        name="Consultive Draft Watermark - Standard (disabled)"
+        inherit_id="web.external_layout_standard"
+        active="False">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="before"/>
+    </template>
+
+    <template
+        id="consultive_smart_watermark_striped"
+        name="Consultive Draft Watermark - Striped (disabled)"
+        inherit_id="web.external_layout_striped"
+        active="False">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="before"/>
+    </template>
+
+    <template
+        id="consultive_smart_watermark_boxed"
+        name="Consultive Draft Watermark - Boxed (disabled)"
+        inherit_id="web.external_layout_boxed"
+        active="False">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="before"/>
+    </template>
+
+    <template
+        id="consultive_smart_watermark_bold"
+        name="Consultive Draft Watermark - Bold (disabled)"
+        inherit_id="web.external_layout_bold"
+        active="False">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="before"/>
+    </template>
+
+</odoo>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Watermark PDF</title>
+</head>
+<body>
+
+<section style="background:#f5f5f5; padding:40px 20px; text-align:center; font-family: Arial, sans-serif;">
+    <h1 style="margin:0; color:#222; font-size:30px;">Smart Watermark PDF</h1>
+    <p style="color:#666; font-size:16px; margin-top:10px;">
+        State-aware diagonal watermark on every PDF report &mdash; fully configurable per model via Settings, zero code changes needed.
+    </p>
+</section>
+
+<section style="padding:30px 40px; max-width:900px; margin:auto; font-family: Arial, sans-serif; color:#333; line-height:1.6;">
+
+    <h2 style="color:#222; border-bottom:1px solid #ddd; padding-bottom:6px;">Overview</h2>
+    <p>
+        Smart Watermark PDF automatically overlays a bold diagonal watermark on every
+        PDF or printed report whenever the underlying Odoo record is in a non-confirmed
+        state &mdash; for example, a draft Sale Order, a Request for Quotation, or an
+        invoice in draft. The watermark label and the states that trigger it are fully
+        configurable per model through a simple Settings UI, with <strong>no code changes
+        required</strong>.
+    </p>
+
+    <h2 style="color:#222; border-bottom:1px solid #ddd; padding-bottom:6px;">Key Features</h2>
+    <ul>
+        <li>State-aware: watermark appears only on records in non-confirmed states &mdash; <strong>confirmed PDFs are clean</strong>.</li>
+        <li>Fully configurable per model via <strong>Settings &gt; Technical &gt; Reporting &gt; Watermark Configuration</strong>.</li>
+        <li>One-click <strong>&ldquo;Load States from Model&rdquo;</strong> auto-populates every state value with a sensible default label.</li>
+        <li>Covers all <strong>four built-in Odoo report layouts</strong>: Standard, Striped, Boxed, and Bold.</li>
+        <li>Compatible with both <strong>Odoo Community and Enterprise</strong> editions.</li>
+        <li><strong>Multi-company aware</strong> &mdash; company-specific configuration overrides global configuration.</li>
+        <li>Safe opt-in: a model with <strong>no configuration gets no watermark</strong>.</li>
+        <li>States added after &ldquo;Load States&rdquo; auto-generate a label from the state value &mdash; nothing breaks.</li>
+        <li>Lightweight &mdash; depends only on the core <code>web</code> module.</li>
+    </ul>
+
+    <div style="text-align:center; margin:24px 0;">
+        <img src="consultive_smart_watermark_pdf_image_01.png"
+             alt="Watermark Configuration screen in Odoo Settings"
+             style="max-width:100%; border:1px solid #e0e0e0; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"/>
+    </div>
+
+    <h2 style="color:#222; border-bottom:1px solid #ddd; padding-bottom:6px;">How It Works</h2>
+    <ol>
+        <li><strong>Create a configuration</strong> &mdash; go to Settings &gt; Technical &gt; Reporting &gt; Watermark Configuration and add any Odoo model that has a Print PDF action (e.g. Sale Order, Invoice, Purchase Order).</li>
+        <li><strong>Load states</strong> &mdash; click &ldquo;Load States from Model&rdquo; to auto-populate every state value with its default label.</li>
+        <li><strong>Mark confirmed states</strong> &mdash; tick &ldquo;Confirmed (No Watermark)&rdquo; for the states that should <em>not</em> show a watermark (e.g. <code>sale</code> and <code>done</code> for Sale Orders).</li>
+        <li><strong>Print</strong> &mdash; draft PDFs now carry a diagonal watermark; confirmed PDFs are clean.</li>
+    </ol>
+
+    <div style="text-align:center; margin:24px 0;">
+        <img src="consultive_smart_watermark_pdf_image_02.png"
+             alt="Draft PDF report with diagonal watermark overlay"
+             style="max-width:100%; border:1px solid #e0e0e0; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"/>
+    </div>
+
+    <h2 style="color:#222; border-bottom:1px solid #ddd; padding-bottom:6px;">Technical Information</h2>
+    <ul>
+        <li>Compatible with Odoo 19.0</li>
+        <li>Editions: Community &amp; Enterprise</li>
+        <li>Dependencies: <code>web</code> (no additional modules required)</li>
+        <li>License: LGPL-3</li>
+    </ul>
+
+</section>
+
+<section style="background:#1f2937; color:#e5e7eb; padding:30px 40px; text-align:center; font-family: Arial, sans-serif;">
+    <h2 style="color:#fff; margin-top:0;">About Consultive</h2>
+    <p style="max-width:700px; margin:auto; line-height:1.6;">
+        Consultive specializes in custom Odoo development, implementation, and
+        business process consulting. Get in touch for tailored modules,
+        integrations, and end-to-end Odoo deployments.
+    </p>
+    <p style="margin-top:20px; line-height:1.8;">
+        Website: <a href="https://consultive.io" style="color:#93c5fd; text-decoration:none;">consultive.io</a><br>
+        Email: <a href="mailto:contact@consultive.io" style="color:#93c5fd; text-decoration:none;">contact@consultive.io</a><br>
+        Phone: +880 1711 751571
+    </p>
+</section>
+
+</body>
+</html>

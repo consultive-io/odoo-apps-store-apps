@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">consultive.cancel.wizard.form</field>
+        <field name="model">consultive.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Document">
+
+                <!-- ── Warning banner ─────────────────────────────────────── -->
+                <div class="alert alert-danger d-flex align-items-start gap-3 mb-0 rounded-0 border-0 border-bottom border-danger-subtle p-3" role="alert">
+                    <div class="d-flex align-items-center justify-content-center rounded-circle bg-danger text-white flex-shrink-0"
+                         style="width:42px;height:42px;font-size:18px;">
+                        <i class="fa fa-ban" title="Cancel"/>
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="fw-bold text-danger" style="font-size:15px;">
+                            You are about to cancel this document
+                        </div>
+                        <div class="text-muted mt-1" style="font-size:13px;">
+                            Please select a reason before proceeding.
+                        </div>
+                        <div class="mt-2 d-flex align-items-center gap-2"
+                             invisible="record_display == ''">
+                            <i class="fa fa-file-text-o text-danger" title="Document"/>
+                            <span class="fw-semibold text-danger" style="font-size:13px;">
+                                <field name="record_display"
+                                       readonly="1"
+                                       class="d-inline p-0 border-0 text-danger fw-semibold"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── Form fields (no sheet — avoids large padding in dialogs) ── -->
+                <group class="mt-2 mx-2">
+                    <field name="reason_id"
+                           options="{'no_create': True, 'no_open': True}"
+                           placeholder="Select a reason…"/>
+                    <field name="note"
+                           placeholder="Optional: add more context…"/>
+                </group>
+                <field name="res_model" invisible="1"/>
+                <field name="res_ids" invisible="1"/>
+                <field name="record_display" invisible="1"/>
+
+                <!-- ── Footer ────────────────────────────────────────────── -->
+                <footer>
+                    <button name="action_do_cancel"
+                            type="object"
+                            string="Confirm Cancellation"
+                            class="btn-danger"
+                            data-hotkey="v"/>
+                    <button string="Keep Document"
+                            class="btn-secondary"
+                            special="cancel"
+                            data-hotkey="z"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ── List view ────────────────────────────────────────────────────── -->
+    <record id="view_cancel_log_list" model="ir.ui.view">
+        <field name="name">consultive.cancel.log.list</field>
+        <field name="model">consultive.cancel.log</field>
+        <field name="arch" type="xml">
+            <list string="Cancellation Log"
+                  create="false"
+                  delete="false"
+                  default_order="cancel_date desc">
+
+                <field name="cancel_date" string="Date &amp; Time" optional="show"/>
+                <field name="res_model" column_invisible="1"/>
+                <field name="res_model_label"
+                       string="Document Type"
+                       widget="badge"
+                       optional="show"/>
+                <field name="res_name" string="Document" optional="show"/>
+                <field name="reason_id" string="Reason" optional="show"/>
+                <field name="cancelled_by" string="Cancelled By" optional="show"/>
+                <field name="note" string="Note" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Form view ────────────────────────────────────────────────────── -->
+    <record id="view_cancel_log_form" model="ir.ui.view">
+        <field name="name">consultive.cancel.log.form</field>
+        <field name="model">consultive.cancel.log</field>
+        <field name="arch" type="xml">
+            <form string="Cancellation Record" create="false" edit="false" delete="false">
+
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_open_document"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-external-link"
+                            string="Open Document"/>
+                </div>
+
+                <sheet>
+                    <group>
+                        <group string="Document">
+                            <field name="res_model" invisible="1"/>
+                            <field name="res_model_label"
+                                   string="Document Type"
+                                   widget="badge"/>
+                            <field name="res_name" string="Document"/>
+                            <field name="res_id" string="Document ID"/>
+                        </group>
+                        <group string="Cancellation">
+                            <field name="reason_id" string="Reason"/>
+                            <field name="cancelled_by" string="Cancelled By"/>
+                            <field name="cancel_date" string="Cancelled On"/>
+                        </group>
+                    </group>
+                    <group string="Note" invisible="not note">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Search view ───────────────────────────────────────────────────── -->
+    <record id="view_cancel_log_search" model="ir.ui.view">
+        <field name="name">consultive.cancel.log.search</field>
+        <field name="model">consultive.cancel.log</field>
+        <field name="arch" type="xml">
+            <search string="Search Cancellation Log">
+
+                <field name="res_name" string="Document"/>
+                <field name="res_model_label" string="Document Type"/>
+                <field name="reason_id" string="Reason"/>
+                <field name="cancelled_by" string="Cancelled By"/>
+                <field name="note" string="Note"/>
+
+                <!-- Date filters -->
+                <filter name="filter_today"
+                        string="Today"
+                        domain="[('cancel_date', '>=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter name="filter_this_month"
+                        string="This Month"
+                        domain="[('cancel_date', '>=', datetime.datetime.now().strftime('%Y-%m-01'))]"/>
+
+                <!-- Group By -->
+                <separator/>
+                <filter name="group_by_type"
+                        string="Document Type"
+                        context="{'group_by': 'res_model_label'}"/>
+                <filter name="group_by_reason"
+                        string="Reason"
+                        context="{'group_by': 'reason_id'}"/>
+                <filter name="group_by_user"
+                        string="Cancelled By"
+                        context="{'group_by': 'cancelled_by'}"/>
+                <filter name="group_by_month"
+                        string="Month"
+                        context="{'group_by': 'cancel_date:month'}"/>
+
+            </search>
+        </field>
+    </record>
+
+    <!-- ── Window action ─────────────────────────────────────────────────── -->
+    <record id="action_cancel_log" model="ir.actions.act_window">
+        <field name="name">Cancellation Log</field>
+        <field name="res_model">consultive.cancel.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cancel_log_search"/>
+        <field name="context">{'search_default_group_by_type': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No cancellations recorded yet.
+            </p>
+            <p>
+                Every time a document is cancelled with a reason, it will
+                appear here for full traceability.
+            </p>
+        </field>
+    </record>
+
+    <!-- ── Menu: Settings > Technical > Cancellation > Cancellation Log ── -->
+    <menuitem
+        id="menu_cancel_log"
+        name="Cancellation Log"
+        parent="menu_cancel_reason_root"
+        action="action_cancel_log"
+        groups="base.group_system"
+        sequence="20"
+    />
+
+</odoo>

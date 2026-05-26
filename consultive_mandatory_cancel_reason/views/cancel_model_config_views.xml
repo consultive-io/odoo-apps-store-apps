@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_cancel_model_config_list" model="ir.ui.view">
+        <field name="name">consultive.cancel.model.config.list</field>
+        <field name="model">consultive.cancel.model.config</field>
+        <field name="arch" type="xml">
+            <list string="Intercepted Models">
+                <field name="sequence" widget="handle"/>
+                <field name="label" string="Display Label"/>
+                <field name="model_name" string="Model"/>
+                <field name="cancel_method" string="Cancel Method"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_cancel_model_config_form" model="ir.ui.view">
+        <field name="name">consultive.cancel.model.config.form</field>
+        <field name="model">consultive.cancel.model.config</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Intercepted Model">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <group>
+                        <group>
+                            <field name="model_id"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   domain="[('transient', '=', False)]"/>
+                            <field name="label" placeholder="e.g. Manufacturing Order"/>
+                        </group>
+                        <group>
+                            <field name="cancel_method"
+                                   readonly="1"
+                                   help="Auto-detected when the record is saved. Reflects the cancel button method on the target model."/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_cancel_model_config" model="ir.actions.act_window">
+        <field name="name">Model Configuration</field>
+        <field name="res_model">consultive.cancel.model.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No models configured yet.
+            </p>
+            <p>
+                Add a model here to require a cancellation reason whenever
+                a user cancels a document of that type.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem
+        id="menu_cancel_model_config"
+        name="Model Configuration"
+        parent="menu_cancel_reason_root"
+        action="action_cancel_model_config"
+        sequence="30"
+        groups="base.group_system"/>
+
+</odoo>

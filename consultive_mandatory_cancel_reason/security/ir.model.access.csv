@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consultive_cancel_reason_user,consultive.cancel.reason user,model_consultive_cancel_reason,base.group_user,1,0,0,0
+access_consultive_cancel_reason_manager,consultive.cancel.reason manager,model_consultive_cancel_reason,base.group_system,1,1,1,1
+access_consultive_cancel_wizard_user,consultive.cancel.wizard user,model_consultive_cancel_wizard,base.group_user,1,1,1,1
+access_consultive_cancel_log_user,consultive.cancel.log user,model_consultive_cancel_log,base.group_user,1,0,1,0
+access_consultive_cancel_log_manager,consultive.cancel.log manager,model_consultive_cancel_log,base.group_system,1,1,1,1
+access_consultive_cancel_model_config_user,consultive.cancel.model.config user,model_consultive_cancel_model_config,base.group_user,1,0,0,0
+access_consultive_cancel_model_config_manager,consultive.cancel.model.config manager,model_consultive_cancel_model_config,base.group_system,1,1,1,1
